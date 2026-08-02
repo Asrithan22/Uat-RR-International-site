@@ -303,9 +303,31 @@ a { color: inherit; }
   color: inherit;
 }
 
-/* the real artwork replaces the lettered placeholder once it loads */
+/* The real artwork replaces the lettered placeholder once it loads.
+   Rendered as a square emblem so the navy backing on the supplied file reads
+   as a deliberate tile against the white sticky header rather than a stray
+   rectangle. If a transparent version arrives later, drop the border,
+   background and radius below and it sits directly on the bar. */
 .brand__badge { display: block; flex: 0 0 auto; }
-.brand__logo { display: none; width: 46px; height: auto; }
+
+.brand__logo {
+  display: none;
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid rgba(226, 190, 94, .45);
+  border-radius: 3px;
+  background: var(--blue-950);
+  transition: box-shadow .4s ease, border-color .4s ease;
+}
+
+.nav.is-stuck .brand__logo,
+.nav.is-open .brand__logo {
+  border-color: rgba(184, 145, 42, .5);
+  box-shadow: 0 8px 18px -12px rgba(6, 32, 63, .85);
+}
+
 .brand__badge.has-logo .brand__logo { display: block; }
 .brand__badge.has-logo .brand__mark { display: none; }
 
@@ -1851,6 +1873,7 @@ a { color: inherit; }
 @media (max-width: 560px) {
   .brand__text { font-size: 10px; letter-spacing: .18em; }
   .brand__mark { width: 38px; height: 38px; font-size: 17px; }
+  .brand__logo { width: 40px; height: 40px; }
 
   .star-line { font-size: 18px; }
 
