@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RR International Group — Right People. Right Vision.</title>
 <meta name="description" content="RR International Group — an emerging business group from Bengaluru, India. Building Communities • Creating Opportunities • Connecting India &amp; Kuwait." />
-<meta name="theme-color" content="#061120" />
+<meta name="theme-color" content="#041730" />
 
 <meta property="og:title" content="RR International Group — Right People. Right Vision." />
 <meta property="og:description" content="Guided by Our Star. Bringing Opportunities to Light." />
@@ -23,6 +23,37 @@
 <!-- ==========================================================  icons  -->
 <svg width="0" height="0" aria-hidden="true" style="position:absolute">
   <defs>
+    <!-- ---- brand: the compass star lifted from the RR monogram ---- -->
+    <linearGradient id="goldFace" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#F3D98A" />
+      <stop offset="34%"  stop-color="#E2BE5E" />
+      <stop offset="62%"  stop-color="#B8912A" />
+      <stop offset="100%" stop-color="#7E6112" />
+    </linearGradient>
+
+    <linearGradient id="goldFacet" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#8C6C16" />
+      <stop offset="55%"  stop-color="#6A4F0C" />
+      <stop offset="100%" stop-color="#4A3706" />
+    </linearGradient>
+
+    <!-- specular sweep, travelling across the metal -->
+    <linearGradient id="goldSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0" />
+      <stop offset="44%"  stop-color="#FFFFFF" stop-opacity="0" />
+      <stop offset="50%"  stop-color="#FFFDF4" stop-opacity=".7" />
+      <stop offset="56%"  stop-color="#FFFFFF" stop-opacity="0" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+      <animateTransform attributeName="gradientTransform" type="translate"
+                        from="-1 0" to="1 0" dur="4.5s" repeatCount="indefinite" />
+    </linearGradient>
+
+    <symbol id="rr-compass" viewBox="0 0 100 100">
+      <path fill="url(#goldFace)" d="M50 4 L52.68 43.53 L65.56 34.44 L56.47 47.32 L96 50 L56.47 52.68 L65.56 65.56 L52.68 56.47 L50 96 L47.32 56.47 L34.44 65.56 L43.53 52.68 L4 50 L43.53 47.32 L34.44 34.44 L47.32 43.53 Z" />
+      <path fill="url(#goldFacet)" fill-opacity=".9" d="M50 50 L50 4 L47.32 43.53 Z M50 50 L65.56 34.44 L52.68 43.53 Z M50 50 L96 50 L56.47 47.32 Z M50 50 L65.56 65.56 L56.47 52.68 Z M50 50 L50 96 L52.68 56.47 Z M50 50 L34.44 65.56 L47.32 56.47 Z M50 50 L4 50 L43.53 52.68 Z M50 50 L34.44 34.44 L43.53 47.32 Z" />
+      <path fill="url(#goldSheen)" d="M50 4 L52.68 43.53 L65.56 34.44 L56.47 47.32 L96 50 L56.47 52.68 L65.56 65.56 L52.68 56.47 L50 96 L47.32 56.47 L34.44 65.56 L43.53 52.68 L4 50 L43.53 47.32 L34.44 34.44 L47.32 43.53 Z" />
+    </symbol>
+
     <symbol id="i-health" viewBox="0 0 24 24"><path d="M9.5 3h5v6.5H21v5h-6.5V21h-5v-6.5H3v-5h6.5z"/></symbol>
     <symbol id="i-education" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.4V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.6"/><path d="M22 9v6"/></symbol>
     <symbol id="i-corporate" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M6 21V4h9v17"/><path d="M15 9h4v12"/><path d="M9 8h3M9 12h3M9 16h3"/></symbol>
@@ -49,7 +80,12 @@
 <!-- ==========================================================  header  -->
 <header class="nav" id="nav">
   <a class="brand" href="#top" aria-label="RR International Group — home">
-    <span class="brand__mark" aria-hidden="true">RR</span>
+    <!-- Save the monogram (RR + star, transparent PNG) to the path below and it
+         replaces the lettered placeholder automatically. See assets/img/README.md -->
+    <span class="brand__badge" data-logo>
+      <img class="brand__logo" src="assets/img/rr-monogram.png" alt="" />
+      <span class="brand__mark" aria-hidden="true">RR</span>
+    </span>
     <span class="brand__text">
       RR International
       <small>Group</small>
@@ -75,26 +111,43 @@
 
 <main id="main">
 
-<!-- ==========================================================  1 · HERO  -->
+<!-- ==========================================================  1 · BANNER  -->
 <section class="hero" id="top">
-  <div class="hero__media">
-    <!-- Slow crossfade of the group's world: Bengaluru · people · business · partnership.
-         Replace with licensed imagery in assets/img/ before launch. -->
+  <!-- Banner background. The stills below always run, so the banner is never
+       empty; the film fades over them the moment assets/video/banner.mp4 exists.
+       Recommended source footage: aerial Bengaluru, people meeting, handshakes,
+       glass towers, Gulf skyline. 1920x1080, 8-15s loop, no audio, under 6 MB. -->
+  <div class="hero__media" aria-hidden="true">
     <img class="slide" src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1800&q=80" alt="" />
     <img class="slide" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1800&q=80" alt="" />
     <img class="slide" src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1800&q=80" alt="" />
     <img class="slide" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1800&q=80" alt="" />
 
-    <!-- Drop the corporate film at assets/video/hero.mp4 and it takes over automatically -->
     <video class="hero__video" autoplay muted loop playsinline preload="auto">
-      <source src="assets/video/hero.mp4" type="video/mp4" />
-      <source src="assets/video/hero.webm" type="video/webm" />
+      <source src="assets/video/banner.webm" type="video/webm" />
+      <source src="assets/video/banner.mp4" type="video/mp4" />
     </video>
 
     <div class="hero__scrim"></div>
+
+    <!-- Depth layer: gold particles drifting in 3D that gather into the RR star
+         and scatter again. Runs with or without the film behind it. -->
+    <canvas class="hero__particles" id="heroParticles"></canvas>
   </div>
 
   <div class="hero__inner">
+    <!-- 3D brand mark: tilts toward the cursor, floats, and catches a moving
+         highlight. Falls back to the animated compass star until the artwork
+         is placed at assets/img/rr-logo.png -->
+    <div class="hero__badge" id="heroBadge">
+      <div class="hero__badge-3d">
+        <span class="hero__logo-wrap" data-logo>
+          <img class="hero__logo" src="assets/img/rr-logo.png" alt="RR International Group" />
+          <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><use href="#rr-compass" /></svg>
+        </span>
+      </div>
+    </div>
+
     <p class="eyebrow">RR International Group</p>
 
     <h1 class="hero__title">Right People.<br /><span class="gold">Right Vision.</span></h1>
@@ -129,7 +182,7 @@
 </section>
 
 <!-- ==========================================================  2 · WHO WE ARE  -->
-<section class="sect sect--dark" id="about">
+<section class="sect sect--light" id="about">
   <div class="wrap who__grid">
     <div class="reveal">
       <p class="eyebrow">Who We Are</p>
@@ -209,17 +262,7 @@
   <div class="wrap center">
     <div class="reveal">
       <div class="star-stage" aria-hidden="true">
-        <svg viewBox="0 0 100 100">
-          <defs>
-            <linearGradient id="starGold" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stop-color="#E8C766" />
-              <stop offset="55%"  stop-color="#C9A227" />
-              <stop offset="100%" stop-color="#A8841B" />
-            </linearGradient>
-          </defs>
-          <path fill="url(#starGold)"
-                d="M50 4 L61.2 36.4 L95 37.2 L68 57.6 L77.8 90 L50 70.8 L22.2 90 L32 57.6 L5 37.2 L38.8 36.4 Z" />
-        </svg>
+        <svg class="compass compass--spin" viewBox="0 0 100 100"><use href="#rr-compass" /></svg>
       </div>
 
       <p class="eyebrow eyebrow--center">Our Brand Story</p>
@@ -253,7 +296,7 @@
 </section>
 
 <!-- ==========================================================  4 · THE RR WAY  -->
-<section class="sect sect--light" id="rr-way">
+<section class="sect sect--paper" id="rr-way">
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">The RR Way</p>
@@ -297,7 +340,7 @@
 </section>
 
 <!-- ==========================================================  5 · PRINCIPLES  -->
-<section class="sect sect--dark-2" id="principles">
+<section class="sect sect--dark" id="principles">
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Principles That Guide Us</p>
@@ -391,7 +434,7 @@
 </section>
 
 <!-- ==========================================================  7 · ROADMAP  -->
-<section class="sect sect--dark" id="roadmap">
+<section class="sect sect--paper" id="roadmap">
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Future Business Roadmap</p>
@@ -485,12 +528,12 @@
 </section>
 
 <!-- ==========================================================  9 · INDIA  -->
-<section class="sect sect--dark" id="india">
+<section class="sect sect--paper" id="india">
   <div class="wrap split">
     <div class="reveal">
       <p class="eyebrow">India &mdash; Our Foundation</p>
       <h2 class="title">Our Journey<br />Begins in <span class="gold">India.</span></h2>
-      <p class="lead" style="font-family:var(--display);font-size:clamp(20px,2.2vw,28px);font-weight:600;color:var(--white)">
+      <p class="lead" style="font-family:var(--display);font-size:clamp(20px,2.2vw,28px);font-weight:600;color:var(--ink)">
         Bengaluru <span class="sep">&rarr;</span> Electronic City
       </p>
       <p class="lead">
@@ -514,7 +557,7 @@
 </section>
 
 <!-- ==========================================================  10 · INDIA ↔ KUWAIT  -->
-<section class="sect sect--dark-2" id="india-kuwait">
+<section class="sect sect--dark" id="india-kuwait">
   <div class="wrap">
     <div class="reveal center">
       <p class="eyebrow eyebrow--center">India &harr; Kuwait</p>
@@ -563,7 +606,7 @@
 </section>
 
 <!-- ==========================================================  11 · VISION  -->
-<section class="sect sect--dark" id="vision">
+<section class="sect sect--light" id="vision">
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Our Vision</p>
@@ -616,7 +659,7 @@
 </section>
 
 <!-- ==========================================================  12 · FOUNDER  -->
-<section class="sect sect--dark-2" id="founder">
+<section class="sect sect--paper" id="founder">
   <div class="wrap founder">
     <div class="founder__portrait reveal">
       <!-- Replace with the founder photograph: assets/img/founder.jpg -->
@@ -628,7 +671,7 @@
       <h2 class="title title--sm">Mohammed Risal</h2>
       <p class="founder__role">Founder &amp; Managing Director &mdash; RR International Group</p>
 
-      <p class="lead" style="font-family:var(--display);font-size:clamp(21px,2.3vw,30px);font-weight:600;color:var(--white)">
+      <p class="lead" style="font-family:var(--display);font-size:clamp(21px,2.3vw,30px);font-weight:600;color:var(--ink)">
         A Vision Built From Experience, Relationships &amp; Opportunity.
       </p>
 
@@ -730,7 +773,7 @@
 </section>
 
 <!-- ==========================================================  15 · CONTACT  -->
-<section class="sect sect--dark" id="contact">
+<section class="sect sect--paper" id="contact">
   <div class="wrap contact">
     <div class="reveal">
       <p class="eyebrow">Contact</p>
@@ -820,6 +863,11 @@
 <!-- ==========================================================  footer  -->
 <footer class="footer">
   <div class="wrap">
+    <span class="footer__logo" data-logo>
+      <img src="assets/img/rr-logo.png" alt="RR International Group" />
+      <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><use href="#rr-compass" /></svg>
+    </span>
+
     <p class="eyebrow eyebrow--center">RR International Group</p>
 
     <p class="footer__star">
