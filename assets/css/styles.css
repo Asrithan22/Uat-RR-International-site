@@ -46,6 +46,10 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-h);
+  /* clip, never hidden: hidden here turns the page into a scroll box and that
+     is what breaks position:sticky. clip trims the ornaments that hang past
+     the right edge without costing us the pinned banner. */
+  overflow-x: clip;
 }
 
 body {
@@ -56,7 +60,8 @@ body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: hidden;   /* fallback for browsers without overflow:clip */
+  overflow-x: clip;
 }
 
 img, svg { display: block; max-width: 100%; }
@@ -214,6 +219,7 @@ a { color: inherit; }
   text-transform: uppercase;
   text-decoration: none;
   border: 1px solid var(--gold);
+  border-radius: 999px;          /* pill — the shape the whole UI is built on */
   color: var(--gold-deep);
   background: transparent;
   cursor: pointer;
@@ -255,6 +261,86 @@ a { color: inherit; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
 .btn-row--center { justify-content: center; }
 
+/* section ornaments ------------------------------------------------------
+   Every section carries one gold line motif — a ring, an orbit, the compass
+   star, the corridor arcs, a dot field. They write themselves in as the
+   section arrives, then keep turning slowly. Decoration only: aria-hidden,
+   never interactive, always behind the content, and still under reduced
+   motion. Off on touch, where the extra paint buys nothing. */
+
+.sect > .wrap,
+.footer > .wrap { position: relative; z-index: 1; }
+
+.orn {
+  position: absolute;
+  z-index: 0;
+  width: var(--o, 300px);
+  height: var(--o, 300px);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: .5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: rgba(184, 145, 42, .42);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.orn.is-in { opacity: 1; }
+
+.sect--dark .orn,
+.video .orn,
+.footer .orn { color: rgba(226, 190, 94, .4); }
+
+.video .orn { z-index: 2; }   /* the film band lays a scrim over z-index 1 */
+
+/* size */
+.orn--sm { --o: clamp(140px, 16vw, 200px); }
+.orn--md { --o: clamp(210px, 25vw, 330px); }
+.orn--lg { --o: clamp(280px, 36vw, 460px); }
+
+/* placement — kept close to the edges so the copy is never crowded */
+.orn--tl { top: -40px;    left: -70px; }
+.orn--tr { top: -40px;    right: -70px; }
+.orn--bl { bottom: -40px; left: -70px; }
+.orn--br { bottom: -40px; right: -70px; }
+.orn--l  { top: 50%; left: -110px;  transform: translateY(-50%); }
+.orn--r  { top: 50%; right: -110px; transform: translateY(-50%); }
+.orn--c  { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+/* centred on the compass at the head of the section, clear of the copy */
+.orn--halo { top: clamp(84px, 10vw, 160px); left: 50%; transform: translateX(-50%); }
+
+/* motion — each shape turns about the centre of its own viewBox */
+.orn use { transform-box: view-box; transform-origin: 50% 50%; }
+
+.o-spin     { animation: ornSpin 64s linear infinite; }
+.o-spin-rev { animation: ornSpin 44s linear infinite reverse; }
+.o-breathe  { animation: ornBreathe 11s ease-in-out infinite; }
+.o-march    { stroke-dasharray: 16 12; animation: ornMarch 11s linear infinite; }
+
+@keyframes ornSpin { to { transform: rotate(360deg); } }
+
+@keyframes ornBreathe {
+  0%, 100% { transform: scale(1);    opacity: .9; }
+  50%      { transform: scale(1.06); opacity: .45; }
+}
+
+@keyframes ornMarch { to { stroke-dashoffset: -140; } }
+
+/* the outline writes itself once, as the section arrives */
+.o-draw { stroke-dasharray: 340; stroke-dashoffset: 340; }
+
+.orn.is-in .o-draw { animation: ornDraw 2.8s cubic-bezier(.22, .61, .36, 1) forwards; }
+
+.orn.is-in .o-draw.o-spin {
+  animation: ornDraw 2.8s cubic-bezier(.22, .61, .36, 1) forwards,
+             ornSpin 64s linear infinite;
+}
+
+@keyframes ornDraw { to { stroke-dashoffset: 0; } }
+
 /* reveal on scroll ------------------------------------------------------- */
 
 .reveal {
@@ -265,6 +351,39 @@ a { color: inherit; }
 }
 
 .reveal.is-in { opacity: 1; transform: none; }
+
+/* ---- headline line-wipe ------------------------------------------------- */
+/* JS splits each .title on its <br> and wraps the lines. Each line sits in a
+   clipping box and slides up out of it, so the serif type arrives with weight. */
+
+.title .ln { display: block; overflow: hidden; padding-bottom: .06em; }
+
+.title .ln > i {
+  display: block;
+  font-style: inherit;
+  transform: translateY(115%);
+  transition: transform 1s cubic-bezier(.19, 1, .22, 1);
+}
+
+.title.is-in .ln > i { transform: none; }
+.title .ln:nth-child(2) > i { transition-delay: .1s; }
+.title .ln:nth-child(3) > i { transition-delay: .2s; }
+.title .ln:nth-child(4) > i { transition-delay: .3s; }
+
+/* ---- staggered grid entrances ------------------------------------------ */
+
+.stagger > * {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .75s cubic-bezier(.22, .61, .36, 1),
+              transform .75s cubic-bezier(.22, .61, .36, 1);
+}
+
+.stagger.is-in > * { opacity: 1; transform: none; }
+
+/* ---- parallax ----------------------------------------------------------- */
+
+[data-parallax] { will-change: transform; }
 
 /* ==========================================================================
    Header — transparent over the blue banner, white once scrolled
@@ -396,6 +515,7 @@ a { color: inherit; }
 
 .nav__cta {
   border: 1px solid currentColor;
+  border-radius: 999px;
   padding: 11px 20px;
   opacity: 1 !important;
 }
@@ -445,6 +565,37 @@ a { color: inherit; }
   color: var(--white);
   background: var(--blue-950);
 }
+
+/* ---- the pinned run ------------------------------------------------------
+   The track is taller than the screen; the banner sticks to the top of it and
+   holds while that extra height is scrolled through. JS writes two numbers on
+   the track — --hp (0→1 through the whole hold) and --ho (0→1 for the closing
+   hand-off) — and everything below reads them. Desktop only; touch just
+   scrolls. */
+
+.hero-pin { position: relative; height: 240vh; --hp: 0; --ho: 0; }
+
+.hero-pin .hero {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 0;
+}
+
+/* the film keeps pushing in for the length of the hold */
+.hero-pin .hero__media { transform: scale(calc(1 + var(--hp) * .09)); }
+
+/* the badge settles back a touch as the story takes over */
+.hero-pin .hero__badge { transform: scale(calc(1 - var(--hp) * .07)); }
+
+/* the copy lifts away at the end, handing the page to the next section */
+.hero-pin .hero__inner {
+  opacity: calc(1 - var(--ho));
+  transform: translate3d(0, calc(var(--ho) * -64px), 0);
+}
+
+/* the cue has done its job the moment the hold begins */
+.hero-pin .cue { opacity: calc(1 - var(--hp) * 6); }
 
 /* ---- live background: footage on top, Ken Burns stills beneath --------- */
 
@@ -713,6 +864,30 @@ a { color: inherit; }
   50%      { transform: scaleY(1);   opacity: 1; }
 }
 
+/* ---- progress through the held run -------------------------------------- */
+
+.hero__rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  height: 2px;
+  background: rgba(226, 190, 94, .12);
+  opacity: 0;
+}
+
+/* only shown while the banner is actually being held */
+.hero-pin .hero__rail { opacity: 1; }
+
+.hero__fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(to right, var(--gold-lt), var(--gold));
+  transform-origin: 0 50%;
+  transform: scaleX(var(--hp, 0));
+}
+
 /* ==========================================================================
    2 · WHO WE ARE
    ========================================================================== */
@@ -735,6 +910,7 @@ a { color: inherit; }
 
 .values li {
   border: 1px solid var(--rule-light);
+  border-radius: 999px;
   padding: 11px 18px;
   font-size: 11px;
   font-weight: 500;
@@ -1328,6 +1504,7 @@ a { color: inherit; }
 .tags li {
   padding: 10px 18px;
   border: 1px solid var(--rule-light);
+  border-radius: 999px;
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: .12em;
@@ -1341,14 +1518,84 @@ a { color: inherit; }
    11 · VISION
    ========================================================================== */
 
+/* ---- counters ---------------------------------------------------------- */
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 56px;
+  background: var(--rule-light);
+  border: 1px solid var(--rule-light);
+}
+
+.figure {
+  background: var(--white);
+  padding: clamp(26px, 3vw, 40px);
+}
+
+.figure__num {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(46px, 6vw, 80px);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.figure__label {
+  display: block;
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---- pinned timeline --------------------------------------------------- */
+
+.pin { position: relative; height: 185vh; }
+
+.pin__inner {
+  position: sticky;
+  top: calc(var(--nav-h) + 40px);
+  padding-top: 8px;
+}
+
+.pin__rail {
+  position: relative;
+  height: 2px;
+  background: var(--rule-light);
+  overflow: hidden;
+}
+
+.pin__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: linear-gradient(to right, var(--gold-lt), var(--gold));
+  transition: width .15s linear;
+}
+
 .timeline {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1px;
-  margin-top: 52px;
+  margin-top: 34px;
   background: var(--rule-light);
   border: 1px solid var(--rule-light);
 }
+
+/* phases wake up one at a time as the pinned run advances */
+.pin .phase {
+  opacity: .34;
+  transform: translateY(14px);
+  transition: opacity .6s ease, transform .6s ease, background .35s ease;
+}
+
+.pin .phase.is-on { opacity: 1; transform: none; }
 
 .phase {
   background: var(--white);
@@ -1376,8 +1623,8 @@ a { color: inherit; }
   margin-bottom: 18px;
 }
 
-.phase:first-child .phase__dot,
-.phase:hover .phase__dot { background: var(--gold); }
+.phase:hover .phase__dot,
+.phase.is-on .phase__dot { background: var(--gold); }
 
 .phase h3 {
   margin: 0 0 12px;
@@ -1496,13 +1743,15 @@ a { color: inherit; }
   background: var(--blue-950);
 }
 
+/* oversized so the parallax drift never exposes an edge */
 .video__bg {
   position: absolute;
-  inset: 0;
+  top: -12%;
+  left: 0;
   z-index: 0;
   object-fit: cover;
   width: 100%;
-  height: 100%;
+  height: 124%;
   opacity: .3;
 }
 
@@ -1561,6 +1810,7 @@ a { color: inherit; }
 .audience li {
   padding: 10px 18px;
   border: 1px solid var(--rule-light);
+  border-radius: 999px;
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: .12em;
@@ -1647,6 +1897,7 @@ a { color: inherit; }
   display: grid;
   place-items: center;
   border: 1px solid var(--rule-light);
+  border-radius: 50%;
   color: var(--ink-soft);
   transition: border-color .3s ease, color .3s ease, background .3s ease;
 }
@@ -1678,9 +1929,10 @@ a { color: inherit; }
 .field select,
 .field textarea {
   width: 100%;
-  padding: 14px 16px;
+  padding: 14px 18px;
   background: var(--white);
   border: 1px solid var(--rule-light);
+  border-radius: 26px;
   color: var(--ink);
   font-family: var(--body);
   font-size: 14.5px;
@@ -1718,6 +1970,8 @@ a { color: inherit; }
    ========================================================================== */
 
 .footer {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(165deg, var(--blue-900), var(--blue-950));
   color: var(--white);
   padding: clamp(56px, 6vw, 84px) 0 30px;
@@ -1775,8 +2029,29 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   .star-glyph, .star-stage::before, .star-stage::after { animation: none; }
   .compass--spin, .hero__badge-3d { animation: none; }
+
+  .title .ln > i { transform: none; transition: none; }
+  .stagger > * { opacity: 1; transform: none; transition: none; }
+  .pin { height: auto; }
+  .pin__inner { position: static; }
+  .pin .phase { opacity: 1; transform: none; }
+  [data-parallax] { transform: none !important; }
   .hero__video { animation: none; transform: scale(1.02); }
   .cue i { animation: none; }
+
+  /* no held banner — it is one screen and the page moves on */
+  .hero-pin { height: auto; }
+  .hero-pin .hero {
+    position: static;
+    height: auto;
+    min-height: 100svh;
+    transform: none;
+  }
+  .hero-pin .hero__media,
+  .hero-pin .hero__badge,
+  .hero-pin .hero__inner { transform: none; opacity: 1; }
+  .hero-pin .cue { opacity: 1; }
+  .hero__rail { display: none; }
 
   .slide { animation-name: fadeonly; }
   @keyframes fadeonly {
@@ -1785,11 +2060,32 @@ a { color: inherit; }
   }
   .reveal { opacity: 1; transform: none; transition: none; }
   .btn:hover, .way:hover, .sector:hover, .rcard:hover { transform: none; }
+
+  /* ornaments stay — they simply stop moving */
+  .orn { transition: none; }
+  .orn use,
+  .orn.is-in .o-draw,
+  .orn.is-in .o-draw.o-spin { animation: none; stroke-dashoffset: 0; }
 }
 
 /* ==========================================================================
    Responsive
    ========================================================================== */
+
+/* the held banner is exactly one screen tall, so on a short window the copy
+   has to give a little rather than be clipped by it */
+@media (min-width: 981px) and (max-height: 900px) {
+  .hero-pin .hero__inner {
+    padding-top: calc(var(--nav-h) + 16px);
+    padding-bottom: 52px;
+  }
+  .hero-pin .hero__badge { margin-bottom: 14px; }
+  .hero-pin .compass { width: clamp(60px, 6vw, 78px); }
+  .hero-pin .hero__logo { width: clamp(150px, 17vw, 210px); }
+  .hero-pin .hero__title { font-size: clamp(36px, 4.6vw, 62px); margin-bottom: 16px; }
+  .hero-pin .pillars { margin-bottom: 16px; }
+  .hero-pin .hero__sub { margin-bottom: 22px; }
+}
 
 @media (max-width: 1180px) {
   .timeline { grid-template-columns: repeat(2, 1fr); }
@@ -1849,6 +2145,19 @@ a { color: inherit; }
   .hero__actions .btn, .btn-row .btn { flex: 1 1 auto; }
   .cue { display: none; }
 
+  /* no pinning on touch — the banner is one screen and the page scrolls on */
+  .hero-pin { height: auto; }
+  .hero-pin .hero {
+    position: static;
+    height: auto;
+    min-height: 94svh;
+    transform: none;
+  }
+  .hero-pin .hero__media,
+  .hero-pin .hero__badge,
+  .hero-pin .hero__inner { transform: none; opacity: 1; }
+  .hero__rail { display: none; }
+
   /* --- layout collapse --- */
   .who__grid,
   .split,
@@ -1856,7 +2165,18 @@ a { color: inherit; }
   .contact { grid-template-columns: 1fr; }
 
   .founder__portrait { max-width: 320px; }
-  .timeline { grid-template-columns: 1fr; }
+  .timeline { grid-template-columns: 1fr; margin-top: 24px; }
+
+  /* no pinning on touch — the page just scrolls */
+  .pin { height: auto; }
+  .pin__inner { position: static; }
+  .pin .phase { opacity: 1; transform: none; }
+  .pin__rail { display: none; }
+
+  /* ornaments are a wide-screen luxury — the phone gets the clean layout */
+  .orn { display: none; }
+
+  .figures { grid-template-columns: 1fr; }
 
   .bridge { flex-direction: column; gap: 18px; }
   .bridge__line {

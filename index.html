@@ -54,6 +54,56 @@
       <path fill="url(#goldSheen)" d="M50 4 L52.68 43.53 L65.56 34.44 L56.47 47.32 L96 50 L56.47 52.68 L65.56 65.56 L52.68 56.47 L50 96 L47.32 56.47 L34.44 65.56 L43.53 52.68 L4 50 L43.53 47.32 L34.44 34.44 L47.32 43.53 Z" />
     </symbol>
 
+    <!-- ---- section ornaments ------------------------------------------
+         Line motifs, drawn in gold, that every section places in a corner.
+         They are stroked with currentColor and inherit their weight from the
+         .orn wrapper, so one set of shapes serves the light and dark bands
+         alike. Purely decorative — aria-hidden and never interactive. -->
+
+    <symbol id="o-ring" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="47" />
+      <circle cx="50" cy="3" r="2.4" />
+    </symbol>
+
+    <symbol id="o-orbit" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="50" rx="47" ry="18" />
+      <ellipse cx="50" cy="50" rx="18" ry="47" />
+      <circle cx="50" cy="50" r="33" />
+    </symbol>
+
+    <!-- the compass star as an outline, so it can write itself in -->
+    <symbol id="o-star" viewBox="0 0 100 100">
+      <path d="M50 4 L52.68 43.53 L65.56 34.44 L56.47 47.32 L96 50 L56.47 52.68 L65.56 65.56 L52.68 56.47 L50 96 L47.32 56.47 L34.44 65.56 L43.53 52.68 L4 50 L43.53 47.32 L34.44 34.44 L47.32 43.53 Z" />
+    </symbol>
+
+    <!-- nested arcs — the corridor, opening outward -->
+    <symbol id="o-arcs" viewBox="0 0 100 100">
+      <path d="M20 97 A 52 52 0 0 0 20 3" />
+      <path d="M37 89 A 40 40 0 0 0 37 11" />
+      <path d="M54 79 A 30 30 0 0 0 54 21" />
+    </symbol>
+
+    <symbol id="o-wave" viewBox="0 0 100 100">
+      <path d="M0 26 Q 25 6 50 26 T 100 26" />
+      <path d="M0 50 Q 25 30 50 50 T 100 50" />
+      <path d="M0 74 Q 25 54 50 74 T 100 74" />
+    </symbol>
+
+    <symbol id="o-frame" viewBox="0 0 100 100">
+      <path d="M2 32 V2 H32" />
+      <path d="M68 2 H98 V32" />
+      <path d="M98 68 V98 H68" />
+      <path d="M32 98 H2 V68" />
+    </symbol>
+
+    <pattern id="o-dot" width="13" height="13" patternUnits="userSpaceOnUse">
+      <circle cx="1.6" cy="1.6" r="1.15" fill="currentColor" stroke="none" />
+    </pattern>
+
+    <symbol id="o-dots" viewBox="0 0 100 100">
+      <rect width="100" height="100" fill="url(#o-dot)" stroke="none" />
+    </symbol>
+
     <symbol id="i-health" viewBox="0 0 24 24"><path d="M9.5 3h5v6.5H21v5h-6.5V21h-5v-6.5H3v-5h6.5z"/></symbol>
     <symbol id="i-education" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.4V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.6"/><path d="M22 9v6"/></symbol>
     <symbol id="i-corporate" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M6 21V4h9v17"/><path d="M15 9h4v12"/><path d="M9 8h3M9 12h3M9 16h3"/></symbol>
@@ -112,6 +162,11 @@
 <main id="main">
 
 <!-- ==========================================================  1 · BANNER  -->
+<!-- Pinned run: the banner holds in view while the 3D story plays through,
+     then hands the page to the next section. Native position:sticky — the
+     wrapper's extra height IS the hold, so scroll is never taken from the
+     user. Same technique as the vision timeline further down the page. -->
+<div class="hero-pin" id="heroPin">
 <section class="hero" id="top">
   <!-- Banner background. The stills below always run, so the banner is never
        empty; the film fades over them the moment assets/video/banner.mp4 exists.
@@ -179,10 +234,19 @@
   </div>
 
   <a class="cue" href="#about" aria-label="Scroll to content"><i></i>Scroll</a>
+
+  <!-- how far through the held run we are -->
+  <div class="hero__rail" aria-hidden="true"><span class="hero__fill"></span></div>
 </section>
+</div>
 
 <!-- ==========================================================  2 · WHO WE ARE  -->
 <section class="sect sect--light" id="about">
+  <svg class="orn orn--tr orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-spin o-draw" href="#o-ring" />
+    <use class="o-spin-rev" href="#o-star" x="32" y="32" width="36" height="36" />
+  </svg>
+
   <div class="wrap who__grid">
     <div class="reveal">
       <p class="eyebrow">Who We Are</p>
@@ -216,7 +280,7 @@
       </ul>
     </div>
 
-    <aside class="ladder reveal">
+    <aside class="ladder" data-parallax="0.05">
       <p class="ladder__label">Brand Structure</p>
 
       <div class="ladder__step">
@@ -259,6 +323,10 @@
 
 <!-- ==========================================================  3 · BRAND STORY  -->
 <section class="sect story" id="philosophy">
+  <svg class="orn orn--halo orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-spin" href="#o-orbit" />
+  </svg>
+
   <div class="wrap center">
     <div class="reveal">
       <div class="star-stage" aria-hidden="true">
@@ -297,6 +365,10 @@
 
 <!-- ==========================================================  4 · THE RR WAY  -->
 <section class="sect sect--paper" id="rr-way">
+  <svg class="orn orn--bl orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-breathe" href="#o-dots" />
+  </svg>
+
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">The RR Way</p>
@@ -341,6 +413,11 @@
 
 <!-- ==========================================================  5 · PRINCIPLES  -->
 <section class="sect sect--dark" id="principles">
+  <svg class="orn orn--r orn--lg" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-spin o-draw" href="#o-ring" />
+    <use class="o-spin-rev" href="#o-star" x="34" y="34" width="32" height="32" />
+  </svg>
+
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Principles That Guide Us</p>
@@ -389,6 +466,10 @@
 
 <!-- ==========================================================  6 · PLATFORM  -->
 <section class="sect sect--light" id="businesses">
+  <svg class="orn orn--tl orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-march" href="#o-arcs" />
+  </svg>
+
   <div class="wrap center">
     <div class="reveal">
       <p class="eyebrow eyebrow--center">Our Business Platform</p>
@@ -435,6 +516,10 @@
 
 <!-- ==========================================================  7 · ROADMAP  -->
 <section class="sect sect--paper" id="roadmap">
+  <svg class="orn orn--br orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-march" href="#o-wave" />
+  </svg>
+
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Future Business Roadmap</p>
@@ -461,6 +546,10 @@
 
 <!-- ==========================================================  8 · WHO WE CONNECT  -->
 <section class="sect sect--light" id="connect">
+  <svg class="orn orn--tr orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-breathe" href="#o-dots" />
+  </svg>
+
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Who We Connect With</p>
@@ -529,6 +618,10 @@
 
 <!-- ==========================================================  9 · INDIA  -->
 <section class="sect sect--paper" id="india">
+  <svg class="orn orn--r orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-march" href="#o-arcs" />
+  </svg>
+
   <div class="wrap split">
     <div class="reveal">
       <p class="eyebrow">India &mdash; Our Foundation</p>
@@ -558,6 +651,10 @@
 
 <!-- ==========================================================  10 · INDIA ↔ KUWAIT  -->
 <section class="sect sect--dark" id="india-kuwait">
+  <svg class="orn orn--l orn--lg" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-spin o-draw" href="#o-ring" />
+  </svg>
+
   <div class="wrap">
     <div class="reveal center">
       <p class="eyebrow eyebrow--center">India &harr; Kuwait</p>
@@ -607,6 +704,10 @@
 
 <!-- ==========================================================  11 · VISION  -->
 <section class="sect sect--light" id="vision">
+  <svg class="orn orn--tr orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-spin" href="#o-orbit" />
+  </svg>
+
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Our Vision</p>
@@ -619,11 +720,32 @@
       </p>
     </div>
 
+    <!-- Figures drawn from the site itself — nothing claimed that isn't on the page -->
+    <div class="figures reveal">
+      <div class="figure">
+        <span class="figure__num" data-count="5" data-pad="2">0</span>
+        <span class="figure__label">Guiding Principles</span>
+      </div>
+      <div class="figure">
+        <span class="figure__num" data-count="9" data-pad="2">0</span>
+        <span class="figure__label">Sectors We Connect</span>
+      </div>
+      <div class="figure">
+        <span class="figure__num" data-count="10" data-pad="2">0</span>
+        <span class="figure__label">Year Direction</span>
+      </div>
+    </div>
+
     <div class="reveal" style="margin-top:56px">
       <p class="eyebrow">Our 10-Year Direction</p>
     </div>
 
-    <div class="timeline reveal">
+    <!-- Pinned run: the timeline holds in view while the phases advance.
+         Native position:sticky — the page never takes the scroll off the user. -->
+    <div class="pin" id="visionPin">
+      <div class="pin__inner">
+        <div class="pin__rail" aria-hidden="true"><span class="pin__fill"></span></div>
+        <div class="timeline">
       <article class="phase">
         <div class="phase__dot" aria-hidden="true"></div>
         <span class="phase__yrs">Years 1&ndash;2</span>
@@ -654,14 +776,21 @@
         <h3>Legacy &amp; Impact</h3>
         <p>Develop leaders &bull; Build sustainable businesses &bull; Create lasting impact</p>
       </article>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ==========================================================  12 · FOUNDER  -->
 <section class="sect sect--paper" id="founder">
+  <svg class="orn orn--br orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-draw" href="#o-frame" />
+    <use class="o-spin-rev" href="#o-star" x="30" y="30" width="40" height="40" />
+  </svg>
+
   <div class="wrap founder">
-    <div class="founder__portrait reveal">
+    <div class="founder__portrait" data-parallax="0.07">
       <!-- Replace with the founder photograph: assets/img/founder.jpg -->
       <span>Founder photograph<br />to be placed here</span>
     </div>
@@ -706,8 +835,12 @@
 
 <!-- ==========================================================  13 · VISION VIDEO  -->
 <section class="sect video" id="vision-video">
+  <svg class="orn orn--tl orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-spin o-draw" href="#o-ring" />
+  </svg>
+
   <!-- Replace with the RR corporate film still / loop: assets/video/vision-poster.jpg -->
-  <img class="video__bg" src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1800&q=80" alt="" />
+  <img class="video__bg" data-parallax="0.09" src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1800&q=80" alt="" />
   <div class="video__scrim" aria-hidden="true"></div>
 
   <div class="wrap center reveal">
@@ -732,6 +865,10 @@
 
 <!-- ==========================================================  14 · PARTNER  -->
 <section class="sect sect--light" id="partner">
+  <svg class="orn orn--br orn--lg" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-march" href="#o-arcs" />
+  </svg>
+
   <div class="wrap">
     <div class="reveal">
       <p class="eyebrow">Partner With RR</p>
@@ -774,6 +911,10 @@
 
 <!-- ==========================================================  15 · CONTACT  -->
 <section class="sect sect--paper" id="contact">
+  <svg class="orn orn--tr orn--md" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-march" href="#o-wave" />
+  </svg>
+
   <div class="wrap contact">
     <div class="reveal">
       <p class="eyebrow">Contact</p>
@@ -862,6 +1003,11 @@
 
 <!-- ==========================================================  footer  -->
 <footer class="footer">
+  <!-- one slow seal around the sign-off -->
+  <svg class="orn orn--c orn--lg" aria-hidden="true" viewBox="0 0 100 100">
+    <use class="o-spin o-draw" href="#o-ring" />
+  </svg>
+
   <div class="wrap">
     <span class="footer__logo" data-logo>
       <img src="assets/img/rr-logo.png" alt="RR International Group" />
