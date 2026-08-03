@@ -178,31 +178,25 @@
     <img class="slide" src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1800&q=80" alt="" />
     <img class="slide" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1800&q=80" alt="" />
 
-    <video class="hero__video" autoplay muted loop playsinline preload="auto">
-      <source src="assets/video/banner.webm" type="video/webm" />
-      <source src="assets/video/banner.mp4" type="video/mp4" />
+    <!-- Banner film, two clips deep: Kuwait City from the air, and a business
+         district running at speed. Both muted and looping; the upper one fades
+         in and out over the lower, so the banner changes without ever cutting.
+         Playback is started by JS, so reduced-motion visitors keep the stills.
+         Footage: Pexels licence — Obaid Alajmi (Kuwait City), Peter Fowler. -->
+    <video class="hero__video" muted loop playsinline preload="auto">
+      <source src="assets/video/banner-kuwait.mp4" type="video/mp4" />
+    </video>
+
+    <video class="hero__video hero__video--over" muted loop playsinline preload="none">
+      <source src="assets/video/banner-business.mp4" type="video/mp4" />
     </video>
 
     <div class="hero__scrim"></div>
-
-    <!-- Depth layer: gold particles drifting in 3D that gather into the RR star
-         and scatter again. Runs with or without the film behind it. -->
-    <canvas class="hero__particles" id="heroParticles"></canvas>
   </div>
 
   <div class="hero__inner">
-    <!-- 3D brand mark: tilts toward the cursor, floats, and catches a moving
-         highlight. The RR monogram itself, with the compass star kept as the
-         fallback in case the artwork ever goes missing. -->
-    <div class="hero__badge" id="heroBadge">
-      <div class="hero__badge-3d">
-        <span class="hero__logo-wrap" data-logo>
-          <img class="hero__logo" src="assets/img/rr-monogram.png" alt="RR International Group" />
-          <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><use href="#rr-compass" /></svg>
-        </span>
-      </div>
-    </div>
-
+    <!-- No mark here: the header carries it, and the banner opens straight on
+         the words over the film. -->
     <p class="eyebrow">RR International Group</p>
 
     <h1 class="hero__title">Right People.<br /><span class="gold">Right Vision.</span></h1>

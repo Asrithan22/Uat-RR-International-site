@@ -629,9 +629,6 @@ a { color: inherit; }
 /* the film keeps pushing in for the length of the hold */
 .hero-pin .hero__media { transform: scale(calc(1 + var(--hp) * .09)); }
 
-/* the badge settles back a touch as the story takes over */
-.hero-pin .hero__badge { transform: scale(calc(1 - var(--hp) * .07)); }
-
 /* the copy lifts away at the end, handing the page to the next section */
 .hero-pin .hero__inner {
   opacity: calc(1 - var(--ho));
@@ -677,12 +674,18 @@ a { color: inherit; }
 .hero__video {
   z-index: 2;
   opacity: 0;
-  transition: opacity 1.2s ease;
+  transition: opacity 1.8s ease;
   transform: scale(1.06);
   animation: drift 26s ease-in-out infinite alternate;
 }
 
+/* the lower clip simply appears once it can play */
 .hero__video.is-ready { opacity: 1; }
+
+/* the upper clip rides over it and is faded across every few seconds */
+.hero__video--over { z-index: 3; opacity: 0; }
+.hero__video--over.is-ready { opacity: 0; }
+.hero__video--over.is-ready.is-front { opacity: 1; }
 
 /* a slow push adds depth so the footage sits behind the 3D cards */
 @keyframes drift {
@@ -694,18 +697,21 @@ a { color: inherit; }
 .hero__scrim {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
   background:
     radial-gradient(70% 50% at 50% 0%, rgba(226, 190, 94, .18) 0%, rgba(226, 190, 94, 0) 60%),
     radial-gradient(80% 60% at 50% 58%, rgba(23, 85, 160, .42) 0%, rgba(23, 85, 160, 0) 70%),
+    /* light enough that the city reads through it, heavy enough to hold the
+       headline. The film is the point now, so this sits back further than it
+       did when the banner was carried by the particle field. */
     linear-gradient(180deg,
-      rgba(4, 23, 48, .95)    0%,
-      rgba(6, 32, 63, .90)   18%,
-      rgba(13, 52, 99, .80)  42%,
-      rgba(15, 61, 116, .78) 60%,
-      rgba(9, 40, 78, .88)   82%,
-      rgba(4, 23, 48, .96)  100%);
+      rgba(4, 23, 48, .88)    0%,
+      rgba(6, 32, 63, .74)   18%,
+      rgba(13, 52, 99, .54)  42%,
+      rgba(15, 61, 116, .52) 60%,
+      rgba(9, 40, 78, .68)   82%,
+      rgba(4, 23, 48, .90)  100%);
 }
 
 /* crisp gold edge where the banner meets the first white section */
@@ -731,41 +737,11 @@ a { color: inherit; }
   text-align: center;
 }
 
-/* ---- 3D brand mark ------------------------------------------------------ */
-
-.hero__badge {
-  perspective: 900px;
-  margin: 0 auto clamp(20px, 3vh, 34px);
-  width: fit-content;
-}
-
-.hero__badge-3d {
-  transform-style: preserve-3d;
-  transition: transform .35s cubic-bezier(.22, .61, .36, 1);
-  animation: badgeFloat 7s ease-in-out infinite;
-}
-
-/* the pointer takes over from the float while it is over the banner */
-.hero__badge.is-tracking .hero__badge-3d {
-  animation: none;
-  transition: transform .12s ease-out;
-}
-
-@keyframes badgeFloat {
-  0%, 100% { transform: translateY(0)     rotateY(-13deg) rotateX(4deg); }
-  50%      { transform: translateY(-10px) rotateY( 13deg) rotateX(-3deg); }
-}
-
-.hero__logo-wrap { display: block; }
-
-.hero__logo { display: none; width: clamp(124px, 15vw, 178px); height: auto; }
-.hero__logo-wrap.has-logo .hero__logo { display: block; }
-.hero__logo-wrap.has-logo .compass { display: none; }
+/* ---- brand marks --------------------------------------------------------- */
 
 /* The monogram ships on its own navy panel, so it is presented as a medallion
-   — rounded and ringed in gold — rather than pretending to be a cut-out. One
-   rule covers the banner, the brand story and the footer. */
-.hero__logo,
+   — rounded and ringed in gold — rather than pretending to be a cut-out. The
+   banner carries no mark, so this is the brand story and the footer. */
 .star-stage__logo,
 .footer__logo img {
   border-radius: 24%;
@@ -821,16 +797,6 @@ a { color: inherit; }
   transition: color .7s ease, text-shadow .7s ease, opacity .7s ease;
 }
 
-/* the banner story lights each pillar as it reaches that chapter.
-   Only dimmed once the story is actually running, so no-JS keeps them all lit. */
-.hero.story-on .pillars li { opacity: .55; }
-
-.hero .pillars li.is-lit {
-  opacity: 1;
-  color: var(--gold-lt);
-  text-shadow: 0 0 18px rgba(226, 190, 94, .55);
-}
-
 .pillars li:not(:last-child)::after {
   content: "";
   width: 4px;
@@ -878,14 +844,8 @@ a { color: inherit; }
 
 /* ---- particle depth layer ---------------------------------------------- */
 
-.hero__particles {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
+/* the banner star glyph sits still — the film carries the movement now */
+.hero .star-glyph { animation: none; }
 
 /* ---- scroll cue --------------------------------------------------------- */
 
@@ -2104,7 +2064,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .star-glyph, .star-stage::before, .star-stage::after { animation: none; }
-  .compass--spin, .hero__badge-3d, .star-stage__logo { animation: none; }
+  .compass--spin, .star-stage__logo { animation: none; }
 
   .title .ln > i { transform: none; transition: none; }
   .stagger > * { opacity: 1; transform: none; transition: none; }
@@ -2124,7 +2084,6 @@ a { color: inherit; }
     transform: none;
   }
   .hero-pin .hero__media,
-  .hero-pin .hero__badge,
   .hero-pin .hero__inner { transform: none; opacity: 1; }
   .hero-pin .cue { opacity: 1; }
   .hero__rail { display: none; }
@@ -2155,9 +2114,6 @@ a { color: inherit; }
     padding-top: calc(var(--nav-h) + 16px);
     padding-bottom: 52px;
   }
-  .hero-pin .hero__badge { margin-bottom: 14px; }
-  .hero-pin .compass { width: clamp(60px, 6vw, 78px); }
-  .hero-pin .hero__logo { width: clamp(150px, 17vw, 210px); }
   .hero-pin .hero__title { font-size: clamp(36px, 4.6vw, 62px); margin-bottom: 16px; }
   .hero-pin .pillars { margin-bottom: 16px; }
   .hero-pin .hero__sub { margin-bottom: 22px; }
@@ -2230,7 +2186,6 @@ a { color: inherit; }
     transform: none;
   }
   .hero-pin .hero__media,
-  .hero-pin .hero__badge,
   .hero-pin .hero__inner { transform: none; opacity: 1; }
   .hero__rail { display: none; }
 
