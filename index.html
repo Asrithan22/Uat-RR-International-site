@@ -192,12 +192,12 @@
 
   <div class="hero__inner">
     <!-- 3D brand mark: tilts toward the cursor, floats, and catches a moving
-         highlight. Falls back to the animated compass star until the artwork
-         is placed at assets/img/rr-logo.png -->
+         highlight. The RR monogram itself, with the compass star kept as the
+         fallback in case the artwork ever goes missing. -->
     <div class="hero__badge" id="heroBadge">
       <div class="hero__badge-3d">
         <span class="hero__logo-wrap" data-logo>
-          <img class="hero__logo" src="assets/img/rr-logo.png" alt="RR International Group" />
+          <img class="hero__logo" src="assets/img/rr-monogram.png" alt="RR International Group" />
           <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><use href="#rr-compass" /></svg>
         </span>
       </div>
@@ -329,7 +329,10 @@
 
   <div class="wrap center">
     <div class="reveal">
-      <div class="star-stage" aria-hidden="true">
+      <!-- the monogram itself turns here; the coded star stands in only if the
+           artwork is missing -->
+      <div class="star-stage" aria-hidden="true" data-logo>
+        <img class="star-stage__logo" src="assets/img/rr-monogram.png" alt="" />
         <svg class="compass compass--spin" viewBox="0 0 100 100"><use href="#rr-compass" /></svg>
       </div>
 
@@ -401,6 +404,14 @@
         <h3>Right Justice</h3>
         <p>Building relationships through fairness, ethics, transparency and mutual respect.</p>
       </article>
+
+      <!-- five principles leave a hole in a three-column grid; the sixth cell
+           carries the picture rather than an empty rule.
+           TODO: swap for RR's own photography when it is shot. -->
+      <figure class="tile-img">
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80" alt="" loading="lazy" />
+        <figcaption>Right People <span class="sep">&bull;</span> Right Time</figcaption>
+      </figure>
     </div>
 
     <p class="flow reveal">
@@ -455,6 +466,11 @@
         <span class="en">&amp; Responsibility</span>
         <p>Building beyond short-term gains and creating sustainable value for future generations.</p>
       </article>
+
+      <figure class="tile-img">
+        <img src="https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=1200&q=80" alt="" loading="lazy" />
+        <figcaption>India <span class="sep">&harr;</span> Kuwait <span class="sep">&harr;</span> GCC</figcaption>
+      </figure>
     </div>
 
     <blockquote class="quote reveal" style="margin-top:48px">
@@ -540,6 +556,13 @@
       <div class="rcard"><svg class="icon" aria-hidden="true"><use href="#i-food"/></svg>Food &amp; Beverage</div>
       <div class="rcard"><svg class="icon" aria-hidden="true"><use href="#i-services"/></svg>Business &amp; Strategic Ventures</div>
       <div class="rcard"><svg class="icon" aria-hidden="true"><use href="#i-innovation"/></svg>New Opportunities &amp; Innovation</div>
+
+      <!-- the eighth cell closes the row: the Gulf skyline these directions
+           point toward. Illustrative — RR claims no operations there. -->
+      <figure class="tile-img tile-img--flat">
+        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=80" alt="" loading="lazy" />
+        <figcaption>Future Markets</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -1010,7 +1033,7 @@
 
   <div class="wrap">
     <span class="footer__logo" data-logo>
-      <img src="assets/img/rr-logo.png" alt="RR International Group" />
+      <img src="assets/img/rr-monogram.png" alt="RR International Group" />
       <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><use href="#rr-compass" /></svg>
     </span>
 
