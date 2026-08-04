@@ -8,10 +8,10 @@ Nothing else needs editing.
 The banner runs two clips, stacked. The upper one fades in and out over the
 lower every 7 seconds, so the picture changes without ever cutting.
 
-| File | Shows | Size |
-|---|---|---|
-| `banner-kuwait.mp4` | Kuwait City skyline from the air, dusk | 1.8 MB |
-| `banner-business.mp4` | Business district at night, traffic at speed | 3.6 MB |
+| File | Shows | Role | Size |
+|---|---|---|---|
+| `banner-business.mp4` | Business district at night, traffic at speed | base clip | 3.6 MB |
+| `banner-kuwait.mp4` | Kuwait City skyline from the air, dusk | crossfades over it | 1.8 MB |
 
 Both are Pexels-licensed (free for commercial use, no attribution required):
 Kuwait City by Obaid Alajmi, the night district by Peter Fowler.
@@ -28,32 +28,32 @@ Kuwait City by Obaid Alajmi, the night district by Peter Fowler.
 
 **Behaviour worth knowing**
 
-- The clips speed up as the pinned banner is scrolled through — 1× at the top,
-  2.4× as it hands over to the next section.
-- Phones load only `banner-kuwait.mp4`; the second clip is dropped below 980px.
-- `prefers-reduced-motion` drops both and the still carousel carries the banner.
+- The banner is one screen tall and is no longer pinned — it hands straight over
+  to Our Vision, so the clips play at normal speed throughout.
+- Phones load only `banner-business.mp4`; the crossfade clip is dropped below 980px.
+- `prefers-reduced-motion` drops both and the still behind them carries the banner.
 
 **Subject matter, per the brief:** aerial Bengaluru, Electronic City, people meeting,
 handshakes, glass towers, a Gulf skyline for the India ↔ Kuwait note.
 
-## Carousel card clips
+## Brand structure slider
 
-Optional. Each lives in `cards/` and its poster image shows until the file exists.
+The six slides in *Who We Are & Brand Structure* each carry a still, not a clip.
+They currently point at Unsplash; swap each `<img src>` in `index.html` for RR's
+own photography as it is shot.
 
-| File | Card |
+| Slide | Subject to shoot |
 |---|---|
-| `cards/bengaluru.mp4` | Bengaluru |
-| `cards/partnerships.mp4` | Partnerships |
-| `cards/india-kuwait.mp4` | India ↔ Kuwait |
+| 01 RR International Group | The group's own offices or a signature building |
+| 02 RR Event Management | A live RR event — audience, stage, delivery |
+| 03 Electronic City United | ECU community gathering |
+| 04 Bengaluru → Electronic City | The team at work in Electronic City |
+| 05 India ↔ Kuwait | Kuwait City |
+| 06 GCC & Future Markets | Gulf skyline |
 
-**Specification**
-
-- Portrait 3:4 — 720×960 is plenty, the cards render at ~260px wide
-- 5–10 second loop, no audio, under 2 MB each
-- The cards rotate away in 3D at the edges, so keep the subject dead centre
-
-To turn any other card into video, swap its `<img>` for the same `<video>` block used
-by the three above and add the file here.
+**Specification** — landscape 3:2, 1200px wide is plenty, under 400 KB each after
+compression. The slide crops to fill, so keep the subject off dead centre-left,
+where the navy wash falls.
 
 ## Where to source it
 
