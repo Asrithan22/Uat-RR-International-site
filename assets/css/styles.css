@@ -522,10 +522,13 @@ a { color: inherit; }
   z-index: 4;
   pointer-events: none;
   background:
-    radial-gradient(80% 66% at 20% 42%, rgba(23, 20, 15, .86) 0%, rgba(23, 20, 15, .44) 58%, rgba(23, 20, 15, .18) 100%),
-    linear-gradient(118deg, rgba(23, 20, 15, .88) 0%, rgba(34, 29, 22, .62) 48%, rgba(70, 55, 30, .34) 100%),
-    linear-gradient(to top, var(--char) 0%, rgba(23, 20, 15, 0) 34%),
-    linear-gradient(to bottom, rgba(23, 20, 15, .84) 0%, rgba(23, 20, 15, 0) 22%);
+    /* Density is concentrated behind the copy rather than spread flat across
+       the frame, so the banner reads much lighter overall while the headline
+       keeps the contrast it needs. */
+    radial-gradient(62% 62% at 20% 45%, rgba(23, 20, 15, .80) 0%, rgba(23, 20, 15, .34) 56%, rgba(23, 20, 15, .04) 100%),
+    linear-gradient(112deg, rgba(23, 20, 15, .70) 0%, rgba(34, 29, 22, .26) 46%, rgba(70, 55, 30, .06) 100%),
+    linear-gradient(to top, var(--char) 0%, rgba(23, 20, 15, 0) 26%),
+    linear-gradient(to bottom, rgba(23, 20, 15, .62) 0%, rgba(23, 20, 15, 0) 20%);
 }
 
 /* the faintest gold rule work — texture, not pattern */
@@ -550,7 +553,13 @@ a { color: inherit; }
   max-width: var(--maxw);
   margin: 0 auto;
   padding: calc(var(--nav-h) + clamp(30px, 6vh, 70px)) var(--gutter) clamp(70px, 11vh, 120px);
+  /* insurance for the lighter wash — holds the type over a bright frame */
+  text-shadow: 0 2px 20px rgba(23, 20, 15, .5);
 }
+
+/* the chips carry their own ground, so they do not need it */
+.hero__inner .pillars,
+.hero__inner .btn { text-shadow: none; }
 
 .hero__brand {
   margin: 0 0 16px;
