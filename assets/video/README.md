@@ -33,23 +33,26 @@ Kuwait City by Obaid Alajmi, the night district by Peter Fowler.
 - Phones load only `banner-business.mp4`; the crossfade clip is dropped below 980px.
 - `prefers-reduced-motion` drops both and the still behind them carries the banner.
 
-**Subject matter, per the brief:** aerial Bengaluru, Electronic City, people meeting,
-handshakes, glass towers, a Gulf skyline for the India ↔ Kuwait note.
+**Subject matter — NEEDS REPLACING.** Both clips currently in place are city and
+business-district footage left over from the earlier positioning. They no longer
+match what RR does. Shoot or source instead: a compressor skid under assembly,
+piping and structural fabrication, a control panel being wired, instrument
+hook-ups, a gas processing plant, site commissioning work.
 
-## Brand structure slider
+## Capabilities slider
 
-The six slides in *Who We Are & Brand Structure* each carry a still, not a clip.
-They currently point at Unsplash; swap each `<img src>` in `index.html` for RR's
-own photography as it is shot.
+The six slides in *Who We Are & What We Build* each carry a still, not a clip.
+They currently point at Unsplash stock; swap each `<img src>` in `index.html` for
+RR's own photography as it is shot.
 
 | Slide | Subject to shoot |
 |---|---|
-| 01 RR International Group | The group's own offices or a signature building |
-| 02 RR Event Management | A live RR event — audience, stage, delivery |
-| 03 Electronic City United | ECU community gathering |
-| 04 Bengaluru → Electronic City | The team at work in Electronic City |
-| 05 India ↔ Kuwait | Kuwait City |
-| 06 GCC & Future Markets | Gulf skyline |
+| 01 RR International Group | A completed package, or the plant it runs in |
+| 02 Engineering & Design | Engineers over drawings / 3D model on screen |
+| 03 Mechanical | Skid piping and structural fabrication, welding |
+| 04 Electrical & Power | Panel wiring, cable routing, motor terminations |
+| 05 Automation & Control | PLC/HMI panel, control room, logic on screen |
+| 06 Instrumentation | Instrument hook-ups, calibration, loop checking |
 
 **Specification** — landscape 3:2, 1200px wide is plenty, under 400 KB each after
 compression. The slide crops to fill, so keep the subject off dead centre-left,
