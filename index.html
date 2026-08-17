@@ -86,11 +86,10 @@
     <!-- Daylight footage, deliberately: people working together, colour intact.
          A meeting room, with an overhead of the same table crossfading over it.
 
-         No src until JS sets one. That way a phone fetches the 720p file rather
-         than the 1080p, and a reduced-motion visitor fetches neither. -->
+         No src until JS sets one, so a reduced-motion visitor fetches neither.
+         Add data-src-sm to serve a smaller cut below 980px. -->
     <video class="hero__video" muted loop playsinline preload="none"
-           data-src="assets/video/banner-team.mp4"
-           data-src-sm="assets/video/banner-team-sm.mp4"></video>
+           data-src="assets/video/banner-team.mp4"></video>
 
     <video class="hero__video hero__video--over" muted loop playsinline preload="none"
            data-src="assets/video/banner-collab.mp4"></video>

@@ -10,17 +10,22 @@ lower every 7 seconds, so the picture changes without ever cutting.
 
 | File | Shows | Role | Size |
 |---|---|---|---|
-| `banner-team.mp4` | Meeting room in daylight, people talking | base clip, 1080p | 5.9 MB |
-| `banner-team-sm.mp4` | The same clip at 720p | base clip on phones | 2.7 MB |
-| `banner-collab.mp4` | The same table from overhead, laptops and notes | crossfades over it | 4.3 MB |
+| `banner-team.mp4` | Meeting room in daylight, people talking | base clip | 2.7 MB |
+| `banner-collab.mp4` | The same table from overhead, laptops and notes | crossfades over it | 2.5 MB |
 
-All Pexels-licensed — free for commercial use, no attribution required.
+Both Pexels-licensed — free for commercial use, no attribution required.
+
+**Both are 720p, deliberately.** 1080p cuts of the same clips came to 10.2 MB
+between them for a banner that sits behind a scrim; 720p halves that and the
+softness does not show at the sizes this renders. Do not "upgrade" these to
+1080p without a reason.
 
 **Sources are set by JS, not by the markup.** The `<video>` elements carry
-`data-src` and `data-src-sm` instead of a `src`, and `main.js` picks one. So a
-phone fetches the 720p cut, a desktop fetches the 1080p, and a reduced-motion
-visitor fetches neither. If you add a replacement, set `data-src` — a plain
-`src` will load on every device and defeat this.
+`data-src` instead of `src`, and `main.js` assigns it — so a reduced-motion
+visitor fetches nothing at all. If a clip ever needs a smaller cut for phones,
+add `data-src-sm` alongside it and `main.js` will use it below 980px. If you add
+a replacement, set `data-src`: a plain `src` loads on every device and defeats
+both of these.
 
 **Specification for replacements — daylight only**
 
@@ -39,7 +44,7 @@ visitor fetches neither. If you add a replacement, set `data-src` — a plain
 
 - The banner is one screen tall and is no longer pinned — it hands straight over
   to Our Vision, so the clips play at normal speed throughout.
-- Phones load only `banner-team-sm.mp4`; the crossfade clip is dropped below 980px.
+- Phones load only `banner-team.mp4`; the crossfade clip is dropped below 980px.
 - `prefers-reduced-motion` drops both and the still behind them carries the banner.
 - The CSS lifts colour rather than draining it (`saturate(1.18)`), so whatever
   goes here should already be colourful in camera.
