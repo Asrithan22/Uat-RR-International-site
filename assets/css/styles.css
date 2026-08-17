@@ -504,10 +504,9 @@ a { color: inherit; }
   object-fit: cover;
 }
 
-/* the footage is warmed and desaturated so it reads as one ground with the
-   gold rather than as a blue photograph behind it */
+/* the footage carries its own colour — lift it rather than grade it out */
 .hero__still,
-.hero__video { filter: saturate(.45) sepia(.36) contrast(1.05); }
+.hero__video { filter: saturate(1.18) contrast(1.06); }
 
 .hero__still { z-index: 1; opacity: .9; }
 
@@ -537,13 +536,13 @@ a { color: inherit; }
   z-index: 4;
   pointer-events: none;
   background:
-    /* Density is concentrated behind the copy rather than spread flat across
-       the frame, so the banner reads much lighter overall while the headline
-       keeps the contrast it needs. */
-    radial-gradient(62% 62% at 20% 45%, rgba(23, 20, 15, .80) 0%, rgba(23, 20, 15, .34) 56%, rgba(23, 20, 15, .04) 100%),
-    linear-gradient(112deg, rgba(23, 20, 15, .70) 0%, rgba(34, 29, 22, .26) 46%, rgba(70, 55, 30, .06) 100%),
-    linear-gradient(to top, var(--char) 0%, rgba(23, 20, 15, 0) 26%),
-    linear-gradient(to bottom, rgba(23, 20, 15, .62) 0%, rgba(23, 20, 15, 0) 20%);
+    /* The footage is daylight now, so this is only what the type needs: a pool
+       behind the copy that clears completely by mid-frame, and a band under
+       the bar. No full-frame wash and no black foot — the right-hand side of
+       the banner is the footage at its own brightness. */
+    radial-gradient(52% 58% at 15% 47%, rgba(23, 20, 15, .80) 0%, rgba(23, 20, 15, .32) 58%, rgba(23, 20, 15, 0) 100%),
+    linear-gradient(100deg, rgba(23, 20, 15, .64) 0%, rgba(23, 20, 15, .14) 44%, rgba(23, 20, 15, 0) 66%),
+    linear-gradient(to bottom, rgba(23, 20, 15, .46) 0%, rgba(23, 20, 15, 0) 14%);
 }
 
 /* the faintest gold rule work — texture, not pattern */
@@ -644,8 +643,12 @@ a { color: inherit; }
   z-index: 7;
   transform: translateX(-50%);
   width: 24px; height: 40px;
-  border: 1.5px solid rgba(212, 166, 74, .6);
+  border: 1.5px solid rgba(212, 166, 74, .75);
   border-radius: 14px;
+  /* the banner has no dark foot any more, so the cue carries its own */
+  background: rgba(23, 20, 15, .38);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   display: grid;
   place-items: start center;
   padding-top: 7px;

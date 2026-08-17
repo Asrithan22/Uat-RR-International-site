@@ -10,31 +10,35 @@ lower every 7 seconds, so the picture changes without ever cutting.
 
 | File | Shows | Role | Size |
 |---|---|---|---|
-| `banner-business.mp4` | Business district at night, traffic at speed | base clip | 3.6 MB |
-| `banner-kuwait.mp4` | Kuwait City skyline from the air, dusk | crossfades over it | 1.8 MB |
+| `banner-team.mp4` | Meeting room in daylight, people talking | base clip | 5.9 MB |
+| `banner-collab.mp4` | The same table from overhead, laptops and notes | crossfades over it | 4.3 MB |
 
-Both are Pexels-licensed (free for commercial use, no attribution required):
-Kuwait City by Obaid Alajmi, the night district by Peter Fowler.
+Both are Pexels-licensed — free for commercial use, no attribution required.
 
-**Specification for replacements**
+**Specification for replacements — daylight only**
 
+- **Bright, daylight footage.** Night and low-key clips were tried and rejected:
+  they read as a black banner no matter how light the scrim over them is.
 - 1920×1080, H.264, 24 or 30fps
 - 5–15 second seamless loop
 - **No audio track** — browsers block autoplay on anything with sound
-- Under 4 MB each. Compress with:
-  `ffmpeg -i source.mp4 -an -vf scale=1920:-2 -crf 28 -preset slow banner-kuwait.mp4`
-- The scrim over the film sits at 52–90% opacity, so mid-tones survive but fine
-  detail does not. Aerials and wide city shots read best.
+- Ideally under 4 MB. Compress with:
+  `ffmpeg -i source.mp4 -an -vf scale=1920:-2 -crf 28 -preset slow banner-team.mp4`
+- The scrim is now only a pool behind the headline on the left; it clears
+  completely by mid-frame. Keep the busy part of the shot to the **right**, and
+  keep the left third calm so the type has something quiet to sit on.
 
 **Behaviour worth knowing**
 
 - The banner is one screen tall and is no longer pinned — it hands straight over
   to Our Vision, so the clips play at normal speed throughout.
-- Phones load only `banner-business.mp4`; the crossfade clip is dropped below 980px.
+- Phones load only `banner-team.mp4`; the crossfade clip is dropped below 980px.
 - `prefers-reduced-motion` drops both and the still behind them carries the banner.
+- The CSS lifts colour rather than draining it (`saturate(1.18)`), so whatever
+  goes here should already be colourful in camera.
 
-**Subject matter, per the brief:** aerial Bengaluru, Electronic City, people meeting,
-handshakes, glass towers, a Gulf skyline for the India ↔ Kuwait note.
+**Subject matter, per the brief:** people meeting, handshakes, community events,
+Bengaluru and Electronic City, a Gulf skyline for the India ↔ Kuwait note.
 
 ## Brand structure slider
 
