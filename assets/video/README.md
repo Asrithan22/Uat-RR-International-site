@@ -10,10 +10,17 @@ lower every 7 seconds, so the picture changes without ever cutting.
 
 | File | Shows | Role | Size |
 |---|---|---|---|
-| `banner-team.mp4` | Meeting room in daylight, people talking | base clip | 5.9 MB |
+| `banner-team.mp4` | Meeting room in daylight, people talking | base clip, 1080p | 5.9 MB |
+| `banner-team-sm.mp4` | The same clip at 720p | base clip on phones | 2.7 MB |
 | `banner-collab.mp4` | The same table from overhead, laptops and notes | crossfades over it | 4.3 MB |
 
-Both are Pexels-licensed — free for commercial use, no attribution required.
+All Pexels-licensed — free for commercial use, no attribution required.
+
+**Sources are set by JS, not by the markup.** The `<video>` elements carry
+`data-src` and `data-src-sm` instead of a `src`, and `main.js` picks one. So a
+phone fetches the 720p cut, a desktop fetches the 1080p, and a reduced-motion
+visitor fetches neither. If you add a replacement, set `data-src` — a plain
+`src` will load on every device and defeat this.
 
 **Specification for replacements — daylight only**
 
@@ -32,7 +39,7 @@ Both are Pexels-licensed — free for commercial use, no attribution required.
 
 - The banner is one screen tall and is no longer pinned — it hands straight over
   to Our Vision, so the clips play at normal speed throughout.
-- Phones load only `banner-team.mp4`; the crossfade clip is dropped below 980px.
+- Phones load only `banner-team-sm.mp4`; the crossfade clip is dropped below 980px.
 - `prefers-reduced-motion` drops both and the still behind them carries the banner.
 - The CSS lifts colour rather than draining it (`saturate(1.18)`), so whatever
   goes here should already be colourful in camera.

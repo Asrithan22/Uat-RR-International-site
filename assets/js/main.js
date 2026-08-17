@@ -295,9 +295,18 @@
       if (second) second.remove();
     }
 
+    var small = window.innerWidth <= 980;
+
     [].slice.call(document.querySelectorAll(".hero__video")).forEach(function (film) {
       film.addEventListener("canplay", function () { film.classList.add("is-ready"); }, { once: true });
       film.addEventListener("error", function () { film.remove(); }, { once: true });
+
+      // the source is chosen here, not in the markup — a phone takes the 720p
+      // cut, and nothing is fetched at all until this runs
+      var src = (small && film.getAttribute("data-src-sm")) || film.getAttribute("data-src");
+      if (!src) return;
+      film.src = src;
+      film.load();
 
       var playing = film.play();
       if (playing && typeof playing.catch === "function") { playing.catch(function () {}); }
